@@ -3,14 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/purple_200"
     tools:context=".ui.fragments.uploadimage.UploadImageFragment">
 
-    <TextView
+    <WebView
+        android:id="@+id/web_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Upload Image Fragment"
-        android:textSize="40sp" />
+        android:layout_height="match_parent"/>
 
 </FrameLayout>

@@ -2,19 +2,20 @@ package com.example.testgame.ui.activities.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.testgame.R
 import com.example.testgame.databinding.ActivityMainBinding
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+
+    private lateinit var webViewViewModel: WebViewViewModel
 
     private val navController: NavController by lazy {
         val navHostFragment =
@@ -27,32 +28,37 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        webViewViewModel = ViewModelProvider(this)[WebViewViewModel::class.java]
+
         lifecycleScope.launch {
             delay(2000)
-            navigateToGameFragment()
+            navigateToUploadImageFragment()
         }
     }
 
 
     private fun navigateToGameFragment() {
-        findNavController(binding.fragmentContainerView.id).navigate(
-            R.id.action_splashFragment_to_gameFragment
-        )
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            if (destination.id == R.id.splashFragment) {
+                navController.navigate(R.id.action_splashFragment_to_gameFragment)
+            }
+        }
     }
 
     private fun navigateToUploadImageFragment() {
-        findNavController(binding.fragmentContainerView.id).navigate(
-            R.id.action_splashFragment_to_uploadImageFragment
-        )
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            if (destination.id == R.id.splashFragment) {
+                navController.navigate(R.id.action_splashFragment_to_uploadImageFragment)
+            }
+        }
     }
 
     override fun onBackPressed() {
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             if (destination.id == R.id.uploadImageFragment) {
-                Snackbar.make(binding.root, "Impossible to go back", Snackbar.LENGTH_LONG).show()
+                webViewViewModel.onBackPressed.value = true
                 return@addOnDestinationChangedListener
-            }
-            else super.onBackPressed()
+            } else super.onBackPressed()
         }
     }
 }
