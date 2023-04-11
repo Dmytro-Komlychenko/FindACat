@@ -9,5 +9,32 @@
         android:id="@+id/splashFragment"
         android:name="com.example.testgame.ui.fragments.splash.SplashFragment"
         android:label="fragment_splash"
-        tools:layout="@layout/fragment_splash" />
+        tools:layout="@layout/fragment_splash">
+        <action
+            android:id="@+id/action_splashFragment_to_gameFragment"
+            app:destination="@id/gameFragment"
+            app:popUpTo="@+id/splashFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashFragment_to_uploadImageFragment"
+            app:destination="@id/uploadImageFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/gameFragment"
+        android:name="com.example.testgame.ui.fragments.game.GameFragment"
+        android:label="fragment_game"
+        tools:layout="@layout/fragment_game">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/uploadImageFragment"
+        android:name="com.example.testgame.ui.fragments.uploadimage.UploadImageFragment"
+        android:label="fragment_upload_image"
+        tools:layout="@layout/fragment_upload_image">
+
+    </fragment>
+
 </navigation>
