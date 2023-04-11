@@ -36,6 +36,7 @@ class CustomWebView(
         initWebViewClient()
         initWebChromeClient(context)
         loadUrl(url)
+        setDownloadListener(context)
     }
 
     fun loadUrl(url: String) {
@@ -110,6 +111,12 @@ class CustomWebView(
                 return true
             }
 
+        }
+    }
+
+    private fun setDownloadListener(context: Context) {
+        webView.setDownloadListener { url, _, _, _, l ->
+            context.startActivity(Intent(Intent.ACTION_VIEW).setData(Uri.parse(url)))
         }
     }
 
