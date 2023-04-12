@@ -23,7 +23,17 @@ class GameViewModel(
 
     fun saveResult() {
         viewModelScope.launch {
-            saveResultUseCase.execute(com.example.domain.models.Result(0, counterCatsFound))
+            val tryNumber: Int =
+                if (results.value?.isNotEmpty() == true) {
+                    results.value?.maxOf { res -> res.tryNumber }!!.plus(1)
+                } else 1
+
+            saveResultUseCase.execute(
+                com.example.domain.models.Result(
+                    tryNumber,
+                    counterCatsFound
+                )
+            )
         }
     }
 

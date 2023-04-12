@@ -63,7 +63,8 @@ class CatchCatFragment : Fragment() {
             if (result) {
                 ++gameViewModel.counterCatsFound
 
-                var catInBoxImage = when (gameViewModel.counterCatsFound) {
+                val catInBoxImage = when (gameViewModel.counterCatsFound) {
+                    0 -> R.drawable.ic_empty_box
                     1 -> R.drawable.ic_cat_in_box_1
                     2 -> R.drawable.ic_cat_in_box_2
                     3 -> R.drawable.ic_cat_in_box_3

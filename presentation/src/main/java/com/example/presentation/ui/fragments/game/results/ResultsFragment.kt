@@ -38,8 +38,8 @@ class ResultsFragment : Fragment() {
             adapter = ResultItemAdapter(it)
             binding.recyclerView.adapter = adapter
 
-
-            binding.tvMaxNumber.text = it.maxOf { res -> res.countFoundCats }.toString()
+            if (it.isNotEmpty())
+                binding.tvMaxNumber.text = it.maxOf { res -> res.countFoundCats }.toString()
         }
 
         return binding.root
