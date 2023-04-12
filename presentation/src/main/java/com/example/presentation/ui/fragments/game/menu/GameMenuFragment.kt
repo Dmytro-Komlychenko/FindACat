@@ -54,6 +54,12 @@ class GameMenuFragment : Fragment() {
             )
         }
 
+        binding.btnShop.setOnClickListener {
+            navController.navigate(
+                R.id.action_gameMenuFragment_to_shopFragment
+            )
+        }
+
         super.onViewCreated(view, savedInstanceState)
     }
 

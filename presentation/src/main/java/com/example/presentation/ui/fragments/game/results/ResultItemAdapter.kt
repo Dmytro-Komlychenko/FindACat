@@ -13,6 +13,7 @@ class ResultItemAdapter(
 ) : RecyclerView.Adapter<ResultItemAdapter.ViewHolder>() {
 
     private lateinit var holder: ViewHolder
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         holder = ViewHolder(
             ResultItemBinding.inflate(

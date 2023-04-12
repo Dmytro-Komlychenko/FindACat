@@ -33,6 +33,9 @@
         <action
             android:id="@+id/action_gameMenuFragment_to_resultsFragment"
             app:destination="@id/resultsFragment" />
+        <action
+            android:id="@+id/action_gameMenuFragment_to_shopFragment"
+            app:destination="@id/shopFragment" />
     </fragment>
 
     <fragment
@@ -52,5 +55,10 @@
         android:name="com.example.presentation.ui.fragments.game.results.ResultsFragment"
         android:label="fragment_results"
         tools:layout="@layout/fragment_results" />
+    <fragment
+        android:id="@+id/shopFragment"
+        android:name="com.example.presentation.ui.fragments.game.shop.ShopFragment"
+        android:label="fragment_shop"
+        tools:layout="@layout/fragment_shop" />
 
 </navigation>
