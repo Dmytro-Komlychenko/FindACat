@@ -30,6 +30,9 @@
         <action
             android:id="@+id/action_gameMenuFragment_to_catchCatFragment"
             app:destination="@id/catchCatFragment" />
+        <action
+            android:id="@+id/action_gameMenuFragment_to_resultsFragment"
+            app:destination="@id/resultsFragment" />
     </fragment>
 
     <fragment
@@ -44,5 +47,10 @@
         android:name="com.example.presentation.ui.fragments.game.play.CatchCatFragment"
         android:label="fragment_catch_cat"
         tools:layout="@layout/fragment_catch_cat" />
+    <fragment
+        android:id="@+id/resultsFragment"
+        android:name="com.example.presentation.ui.fragments.game.results.ResultsFragment"
+        android:label="fragment_results"
+        tools:layout="@layout/fragment_results" />
 
 </navigation>

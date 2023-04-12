@@ -18,4 +18,14 @@ class DomainModule {
     fun provideLogLinkUseCase(databaseRepositoryI: DatabaseRepositoryI): LogLinkUseCase {
         return LogLinkUseCase(databaseRepository = databaseRepositoryI)
     }
+
+    @Provides
+    fun provideSaveResultUseCase(databaseRepositoryI: DatabaseRepositoryI): SaveResultUseCase {
+        return SaveResultUseCase(databaseRepository = databaseRepositoryI)
+    }
+
+    @Provides
+    fun provideGetResultsUseCase(databaseRepositoryI: DatabaseRepositoryI): GetResultsUseCase {
+        return GetResultsUseCase(databaseRepository = databaseRepositoryI)
+    }
 }

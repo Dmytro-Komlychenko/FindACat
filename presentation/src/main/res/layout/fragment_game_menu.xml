@@ -8,17 +8,17 @@
     tools:context="com.example.presentation.ui.fragments.game.menu.GameMenuFragment">
 
     <Button
-        android:id="@+id/btn_Play"
+        android:id="@+id/btn_play"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:text="@string/play"
-        app:layout_constraintBottom_toTopOf="@+id/btn_Statistic"
-        app:layout_constraintEnd_toEndOf="@+id/btn_Statistic"
-        app:layout_constraintStart_toStartOf="@+id/btn_Statistic" />
+        app:layout_constraintBottom_toTopOf="@+id/btn_results"
+        app:layout_constraintEnd_toEndOf="@+id/btn_results"
+        app:layout_constraintStart_toStartOf="@+id/btn_results" />
 
     <Button
-        android:id="@+id/btn_Statistic"
+        android:id="@+id/btn_results"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/results"
@@ -28,13 +28,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btn_Shop"
+        android:id="@+id/btn_shop"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="@string/shop"
-        app:layout_constraintEnd_toEndOf="@+id/btn_Statistic"
-        app:layout_constraintStart_toStartOf="@+id/btn_Statistic"
-        app:layout_constraintTop_toBottomOf="@+id/btn_Statistic" />
+        app:layout_constraintEnd_toEndOf="@+id/btn_results"
+        app:layout_constraintStart_toStartOf="@+id/btn_results"
+        app:layout_constraintTop_toBottomOf="@+id/btn_results" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

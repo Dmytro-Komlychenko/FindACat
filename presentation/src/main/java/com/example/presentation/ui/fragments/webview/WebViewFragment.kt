@@ -20,6 +20,7 @@ class WebViewFragment : Fragment() {
     private val binding: FragmentWebViewBinding get() = _binding!!
 
     private val webViewViewModel: WebViewViewModel by activityViewModels()
+
     private lateinit var webView: CustomWebView
 
 

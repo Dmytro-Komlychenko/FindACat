@@ -9,11 +9,14 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.example.presentation.app.App
 import com.example.presentation.ui.fragments.game.GameViewModel
+import com.example.presentation.ui.fragments.game.GameViewModelFactory
 import com.example.testgame.R
 import com.example.testgame.databinding.FragmentCatchCatBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 import kotlin.random.Random
 
 class CatchCatFragment : Fragment() {
@@ -21,6 +24,8 @@ class CatchCatFragment : Fragment() {
     private var _binding: FragmentCatchCatBinding? = null
     private val binding: FragmentCatchCatBinding get() = _binding!!
 
+    @Inject
+    lateinit var gameViewModelFactory: GameViewModelFactory
     private lateinit var gameViewModel: GameViewModel
 
     override fun onCreateView(
@@ -28,7 +33,10 @@ class CatchCatFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCatchCatBinding.inflate(inflater, container, false)
-        gameViewModel = ViewModelProvider(this)[GameViewModel::class.java]
+
+        (activity?.applicationContext as App).appComponent.inject(this@CatchCatFragment)
+        gameViewModel =
+            ViewModelProvider(this, gameViewModelFactory)[GameViewModel::class.java]
 
         binding.tvCounterFoundCats.text = gameViewModel.counterCatsFound.toString()
         start()
@@ -43,6 +51,7 @@ class CatchCatFragment : Fragment() {
 
         return binding.root
     }
+
 
     private fun start() {
         Glide.with(this).load(R.drawable.ic_closed_box).into(binding.ivBox)
@@ -83,19 +92,27 @@ class CatchCatFragment : Fragment() {
                             finishGame()
                         }.create().show()
                 }
-
+                lifecycleScope.launch {
+                    binding.tvCounterFoundCats.text = gameViewModel.counterCatsFound.toString()
+                    delay(2000)
+                    start()
+                }
             } else {
                 Glide.with(this).load(R.drawable.ic_empty_box).into(binding.ivBox)
                 binding.btnBackToMenu.visibility = View.VISIBLE
                 binding.btnCloseGame.visibility = View.VISIBLE
+                gameViewModel.saveResult()
                 gameViewModel.counterCatsFound = 0
-            }
-            binding.tvCounterFoundCats.text = gameViewModel.counterCatsFound.toString()
 
-            lifecycleScope.launch {
-                delay(2000)
-                start()
+                lifecycleScope.launch {
+                    delay(2000)
+                    binding.tvCounterFoundCats.text = gameViewModel.counterCatsFound.toString()
+                    start()
+                }
             }
+
+
+
         }
     }
 
