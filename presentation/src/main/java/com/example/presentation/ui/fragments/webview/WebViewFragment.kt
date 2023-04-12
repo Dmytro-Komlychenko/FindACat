@@ -1,4 +1,4 @@
-package com.example.testgame.ui.fragments.uploadimage
+package com.example.presentation.ui.fragments.webview
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,17 +7,17 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.example.testgame.CustomWebView
+import com.example.presentation.ui.activities.main.MainActivity
 import com.example.testgame.R
-import com.example.testgame.databinding.FragmentUploadImageBinding
-import com.example.testgame.ui.activities.main.WebViewViewModel
+import com.example.testgame.databinding.FragmentWebViewBinding
+import com.example.presentation.ui.activities.main.database.WebViewViewModel
 import com.google.android.material.snackbar.Snackbar
 
 
-class UploadImageFragment : Fragment() {
+class WebViewFragment : Fragment() {
 
-    private var _binding: FragmentUploadImageBinding? = null
-    private val binding: FragmentUploadImageBinding get() = _binding!!
+    private var _binding: FragmentWebViewBinding? = null
+    private val binding: FragmentWebViewBinding get() = _binding!!
 
     private val webViewViewModel: WebViewViewModel by activityViewModels()
     private lateinit var webView: CustomWebView
@@ -32,15 +32,17 @@ class UploadImageFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentUploadImageBinding.inflate(inflater, container, false)
+        _binding = FragmentWebViewBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
 
         webView = CustomWebView(
             binding.webView,
-            "https://tinypng.com/",
             requireContext(),
-            uploadingImageResult
-        )
+            uploadingImageResult,
+
+        ) {
+            webViewViewModel.logLink(it)
+        }
 
         webViewViewModel.onBackPressed.observe(viewLifecycleOwner) {
             if (webViewViewModel.onBackPressed.value == false) return@observe
@@ -56,6 +58,11 @@ class UploadImageFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val url = arguments?.getString(MainActivity.WEB_LINK_KEY)!!
+        webView.loadUrl(url)
+    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)

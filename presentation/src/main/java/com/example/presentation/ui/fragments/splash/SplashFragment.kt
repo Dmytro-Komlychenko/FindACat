@@ -1,4 +1,4 @@
-package com.example.testgame.ui.fragments.splash
+package com.example.presentation.ui.fragments.splash
 
 import android.os.Bundle
 import android.view.LayoutInflater

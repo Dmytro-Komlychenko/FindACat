@@ -1,21 +1,32 @@
-package com.example.testgame.ui.activities.main
+package com.example.presentation.ui.activities.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.example.presentation.app.App
+import com.example.presentation.ui.activities.main.config.ConfigViewModel
+import com.example.presentation.ui.activities.main.config.ConfigViewModelFactory
+import com.example.presentation.ui.activities.main.database.WebViewViewModel
+import com.example.presentation.ui.activities.main.database.WebViewViewModelFactory
 import com.example.testgame.R
 import com.example.testgame.databinding.ActivityMainBinding
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    @Inject
+    lateinit var webViewViewModelFactory: WebViewViewModelFactory
     private lateinit var webViewViewModel: WebViewViewModel
+
+    @Inject
+    lateinit var configViewModelFactory: ConfigViewModelFactory
+    private lateinit var configViewModel: ConfigViewModel
+
 
     private val navController: NavController by lazy {
         val navHostFragment =
@@ -28,14 +39,19 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        webViewViewModel = ViewModelProvider(this)[WebViewViewModel::class.java]
+        (applicationContext as App).appComponent.inject(this@MainActivity)
+        webViewViewModel = ViewModelProvider(this, webViewViewModelFactory)[WebViewViewModel::class.java]
+        configViewModel =
+            ViewModelProvider(this, configViewModelFactory)[ConfigViewModel::class.java]
 
-        lifecycleScope.launch {
-            delay(2000)
-            navigateToUploadImageFragment()
+        configViewModel.appConfig.observe(this) {
+            if (it.gamePass) {
+                navigateToGameFragment()
+            } else {
+                navigateToWebViewFragment()
+            }
         }
     }
-
 
     private fun navigateToGameFragment() {
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
@@ -45,20 +61,27 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun navigateToUploadImageFragment() {
+    private fun navigateToWebViewFragment() {
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             if (destination.id == R.id.splashFragment) {
-                navController.navigate(R.id.action_splashFragment_to_uploadImageFragment)
+                navController.navigate(
+                    R.id.action_splashFragment_to_webViewFragment,
+                    bundleOf(WEB_LINK_KEY to configViewModel.appConfig.value?.webLink)
+                )
             }
         }
     }
 
     override fun onBackPressed() {
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
-            if (destination.id == R.id.uploadImageFragment) {
+            if (destination.id == R.id.webViewFragment) {
                 webViewViewModel.onBackPressed.value = true
                 return@addOnDestinationChangedListener
             } else super.onBackPressed()
         }
+    }
+
+    companion object {
+        const val WEB_LINK_KEY = "WEB_LINK_KEY"
     }
 }

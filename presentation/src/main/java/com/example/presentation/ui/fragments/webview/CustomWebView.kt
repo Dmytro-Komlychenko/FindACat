@@ -1,41 +1,41 @@
-package com.example.testgame
+package com.example.presentation.ui.fragments.webview
 
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ClipData
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.webkit.*
-import android.webkit.WebView
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
+
+typealias LogLinkCallback = (String) -> Unit
 
 @SuppressLint("SetJavaScriptEnabled")
 class CustomWebView(
     private val webView: WebView,
-    url: String,
     context: Context,
-    private val uploadingImageResult: ActivityResultLauncher<Intent>
+    private val uploadingImageResult: ActivityResultLauncher<Intent>,
+    private val logLinkCallback: LogLinkCallback,
 ) {
 
-    var fString: ValueCallback<Array<Uri>>? = null
-    var camPath: String? = null
-    lateinit var chooserIntent: Intent
+    private var fString: ValueCallback<Array<Uri>>? = null
+    private  var camPath: String? = null
+    private lateinit var chooserIntent: Intent
 
     init {
         setSettings()
         initWebViewClient()
         initWebChromeClient(context)
-        loadUrl(url)
         setDownloadListener(context)
     }
 
@@ -111,6 +111,10 @@ class CustomWebView(
                 return true
             }
 
+            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                super.onPageStarted(view, url, favicon)
+                logLinkCallback.invoke(url!!)
+            }
         }
     }
 

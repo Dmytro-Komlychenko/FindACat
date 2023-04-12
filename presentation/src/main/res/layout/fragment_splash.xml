@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/splash_background"
     android:orientation="vertical"
-    tools:context=".ui.fragments.splash.SplashFragment">
+    tools:context="com.example.presentation.ui.fragments.splash.SplashFragment">
 
     <TextView
         android:id="@+id/textView"
