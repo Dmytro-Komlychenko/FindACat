@@ -14,7 +14,7 @@
         android:layout_height="0dp"
         android:gravity="center"
         android:textSize="40sp"
-        android:text="@string/test_game"
+        android:text="@string/app_name"
         app:layout_constraintBottom_toTopOf="@+id/guideline1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

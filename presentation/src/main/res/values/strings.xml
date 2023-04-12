@@ -1,6 +1,9 @@
 <resources>
-    <string name="app_name">TestGame</string>
+    <string name="app_name">Cats in boxes</string>
     <string name="exit_app">Exit app</string>
-    <string name="test_game">Test Game</string>
-    <string name="game_fragment">Game Fragment</string>
+    <string name="play">Play</string>
+    <string name="results">Results</string>
+    <string name="shop">Shop</string>
+    <string name="back_to_menu">Back to menu</string>
+    <string name="close_the_game">Close the game</string>
 </resources>

@@ -40,7 +40,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         (applicationContext as App).appComponent.inject(this@MainActivity)
-        webViewViewModel = ViewModelProvider(this, webViewViewModelFactory)[WebViewViewModel::class.java]
+        webViewViewModel =
+            ViewModelProvider(this, webViewViewModelFactory)[WebViewViewModel::class.java]
         configViewModel =
             ViewModelProvider(this, configViewModelFactory)[ConfigViewModel::class.java]
 
@@ -56,7 +57,7 @@ class MainActivity : AppCompatActivity() {
     private fun navigateToGameFragment() {
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             if (destination.id == R.id.splashFragment) {
-                navController.navigate(R.id.action_splashFragment_to_gameFragment)
+                navController.navigate(R.id.action_splashFragment_to_gameMenuFragment)
             }
         }
     }
@@ -73,12 +74,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        navController.addOnDestinationChangedListener { controller, destination, arguments ->
-            if (destination.id == R.id.webViewFragment) {
-                webViewViewModel.onBackPressed.value = true
-                return@addOnDestinationChangedListener
-            } else super.onBackPressed()
-        }
+        if (navController.currentDestination?.id == R.id.webViewFragment) {
+            webViewViewModel.onBackPressed.value = true
+        } else onBackPressedDispatcher.onBackPressed()
     }
 
     companion object {
