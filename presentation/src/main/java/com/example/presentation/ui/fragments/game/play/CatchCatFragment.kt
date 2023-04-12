@@ -106,6 +106,7 @@ class CatchCatFragment : Fragment() {
                 gameViewModel.counterCatsFound = 0
 
                 lifecycleScope.launch {
+                    binding.tvCounterFoundCats.text = "You lost."
                     delay(2000)
                     binding.tvCounterFoundCats.text = gameViewModel.counterCatsFound.toString()
                     start()
