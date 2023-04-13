@@ -53,6 +53,8 @@ class CatchCatFragment : Fragment() {
             val result = Random.nextBoolean()
             if (result) {
                 ++gameViewModel.counterCatsFound
+                gameViewModel.money += 0.1F
+                gameViewModel.updateMoney()
 
                 var catInBoxImage = when (gameViewModel.counterCatsFound) {
                     0 -> R.drawable.ic_empty_box
