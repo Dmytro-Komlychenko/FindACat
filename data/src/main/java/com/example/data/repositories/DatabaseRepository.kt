@@ -44,4 +44,8 @@ class DatabaseRepository(val firebaseDB: FirebaseDB) : DatabaseRepositoryI {
             domainGetInventoryCallback.invoke(domainInventory)
         }
     }
+
+    override suspend fun updateMoney(money: Float) {
+        firebaseDB.updateMoney(money)
+    }
 }

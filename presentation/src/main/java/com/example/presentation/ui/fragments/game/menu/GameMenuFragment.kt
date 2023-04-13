@@ -19,10 +19,6 @@ class GameMenuFragment : Fragment() {
 
     private lateinit var navController: NavController
 
-    //@Inject
-    //lateinit var gameViewModelFactory: GameViewModelFactory
-    //private lateinit var gameViewModel: GameViewModel
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,8 +26,6 @@ class GameMenuFragment : Fragment() {
         _binding = FragmentGameMenuBinding.inflate(inflater, container, false)
 
         (activity?.applicationContext as App).appComponent.inject(this@GameMenuFragment)
-        //gameViewModel =
-        //    ViewModelProvider(this, gameViewModelFactory)[GameViewModel::class.java]
 
         return binding.root
     }

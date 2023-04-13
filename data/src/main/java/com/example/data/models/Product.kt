@@ -7,7 +7,7 @@ data class Product(
     val price: Float = 0F,
     val imageUrl: Int = 0,
     val type: ProductType = ProductType.Cat,
-    val position: Int,
+    val position: Int = 0,
 ) {
     fun mapDataToDomain(): com.example.domain.models.Product {
         return com.example.domain.models.Product(

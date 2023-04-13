@@ -13,4 +13,5 @@ interface DatabaseRepositoryI {
 
     suspend fun buyProduct(product: Product)
     suspend fun getInventory(domainGetInventoryCallback: DomainGetInventoryCallback)
+    suspend fun updateMoney(money: Float)
 }

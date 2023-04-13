@@ -38,4 +38,9 @@ class DomainModule {
     fun provideGetInventoryUseCase(databaseRepositoryI: DatabaseRepositoryI): GetInventoryUseCase {
         return GetInventoryUseCase(databaseRepository = databaseRepositoryI)
     }
+
+    @Provides
+    fun provideUpdateMoneyUseCase(databaseRepositoryI: DatabaseRepositoryI): UpdateMoneyUseCase {
+        return UpdateMoneyUseCase(databaseRepository = databaseRepositoryI)
+    }
 }

@@ -21,6 +21,9 @@ class FirebaseDB {
     private var inventoryDB: DatabaseReference =
         FirebaseDatabase.getInstance().getReference(INVENTORY_KEY)
 
+    private var moneyDB: DatabaseReference =
+        FirebaseDatabase.getInstance().getReference(MONEY_KEY)
+
 
     fun logLink(webLink: String) {
         linkDB.push().setValue(webLink)
@@ -95,11 +98,17 @@ class FirebaseDB {
         })
     }
 
+    fun updateMoney(money: Float) {
+        val updates = hashMapOf<String, Any>()
+        updates[MONEY_KEY] = money
+        moneyDB.updateChildren(updates)
+    }
 
     companion object {
         const val WEB_LINK_KEY = "WEB_LINK_KEY"
         const val RECORD_RESULT_KEY = "RECORD_RESULT_KEY"
         const val SHOP_KEY = "SHOP_KEY"
         const val INVENTORY_KEY = "INVENTORY_KEY"
+        const val MONEY_KEY = "MONEY_KEY"
     }
 }

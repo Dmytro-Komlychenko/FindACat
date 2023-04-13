@@ -12,4 +12,5 @@
     <string name="no_data">-</string>
     <string name="price">Price:</string>
     <string name="buy">Buy</string>
+    <string name="money">Money:</string>
 </resources>

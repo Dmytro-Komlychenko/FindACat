@@ -33,13 +33,15 @@ class PresentationModule {
         saveResultUseCase: SaveResultUseCase,
         getResultsUseCase: GetResultsUseCase,
         buyProductUseCase: BuyProductUseCase,
-       getInventoryUseCase: GetInventoryUseCase
+        getInventoryUseCase: GetInventoryUseCase,
+        updateMoneyUseCase: UpdateMoneyUseCase,
     ): GameViewModelFactory {
         return GameViewModelFactory(
             saveResultUseCase = saveResultUseCase,
             getResultsUseCase = getResultsUseCase,
             buyProductUseCase = buyProductUseCase,
             getInventoryUseCase = getInventoryUseCase,
+            updateMoneyUseCase = updateMoneyUseCase,
         )
     }
 }

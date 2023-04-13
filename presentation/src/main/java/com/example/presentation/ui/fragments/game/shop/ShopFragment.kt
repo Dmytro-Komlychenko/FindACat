@@ -41,16 +41,19 @@ class ShopFragment : Fragment() {
         )
 
 
-        gameViewModel.inventory.observe(viewLifecycleOwner) {
+        gameViewModel.userProfile.inventory.observe(viewLifecycleOwner) {
             it.forEach {product ->
                 if (products.contains(product))
                     products.remove(product)
             }
 
-            adapter = ProductItemAdapter(products) {
+            adapter = ProductItemAdapter(products, gameViewModel.userProfile.money) {
                 gameViewModel.buyProduct(it)
+                gameViewModel.userProfile.money -= it.price
+                gameViewModel.updateMoney()
             }
             binding.recyclerView.adapter = adapter
+            binding.tvMoney.text = gameViewModel.userProfile.money.toString()
         }
 
 

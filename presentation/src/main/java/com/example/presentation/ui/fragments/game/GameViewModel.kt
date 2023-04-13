@@ -1,14 +1,11 @@
 package com.example.presentation.ui.fragments.game
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.usecases.BuyProductUseCase
-import com.example.domain.usecases.GetInventoryUseCase
-import com.example.domain.usecases.GetResultsUseCase
-import com.example.domain.usecases.SaveResultUseCase
+import com.example.domain.usecases.*
 import com.example.presentation.models.Product
 import com.example.presentation.models.Result
+import com.example.presentation.models.UserProfile
 import kotlinx.coroutines.launch
 
 class GameViewModel(
@@ -16,11 +13,11 @@ class GameViewModel(
     private val getResultsUseCase: GetResultsUseCase,
     private val buyProductUseCase: BuyProductUseCase,
     private val getInventoryUseCase: GetInventoryUseCase,
+    private val updateMoneyUseCase: UpdateMoneyUseCase,
 ) : ViewModel() {
 
     var counterCatsFound = 0
-    val results: MutableLiveData<ArrayList<Result>> = MutableLiveData()
-    val inventory: MutableLiveData<ArrayList<Product>> = MutableLiveData()
+    var userProfile = UserProfile()
 
     init {
         getResults()
@@ -30,8 +27,8 @@ class GameViewModel(
     fun saveResult() {
         viewModelScope.launch {
             val tryNumber: Int =
-                if (results.value?.isNotEmpty() == true) {
-                    results.value?.maxOf { res -> res.tryNumber }!!.plus(1)
+                if (userProfile.results.value?.isNotEmpty() == true) {
+                    userProfile.results.value?.maxOf { res -> res.tryNumber }!!.plus(1)
                 } else 1
 
             saveResultUseCase.execute(
@@ -50,7 +47,7 @@ class GameViewModel(
                 it.forEach { result ->
                     value.add(Result.mapDomainToPresentation(result))
                 }
-                results.value = value
+                userProfile.results.value = value
             }
         }
     }
@@ -62,7 +59,7 @@ class GameViewModel(
                 it.forEach {
                     value.add(Product.mapDomainToPresentation(it))
                 }
-                inventory.value = value
+                userProfile.inventory.value = value
             }
         }
     }
@@ -70,9 +67,13 @@ class GameViewModel(
     fun buyProduct(product: Product) {
         viewModelScope.launch {
             buyProductUseCase.execute(product.mapPresentationToDomain())
-            inventory.value?.add(product)
+            userProfile.inventory.value?.add(product)
         }
     }
 
-
+    fun updateMoney() {
+        viewModelScope.launch {
+            updateMoneyUseCase.execute(userProfile.money)
+        }
+    }
 }

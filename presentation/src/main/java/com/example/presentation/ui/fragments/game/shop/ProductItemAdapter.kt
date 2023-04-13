@@ -7,11 +7,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.presentation.models.Product
 import com.example.testgame.databinding.ProductItemBinding
+import com.google.android.material.snackbar.Snackbar
 
 typealias BuyProductCallback = (Product) -> Unit
 
 class ProductItemAdapter(
     private val products: ArrayList<Product>,
+    private val money: Float,
     private val buyProductCallback: BuyProductCallback,
 ) : RecyclerView.Adapter<ProductItemAdapter.ViewHolder>() {
 
@@ -49,8 +51,14 @@ class ProductItemAdapter(
             Glide.with(binding.root).load(product.imageUrl).into(binding.ivProductImage)
 
             binding.btnBuy.setOnClickListener {
+                if (money < product.price) {
+                    Snackbar.make(binding.root, "Not enough money", Snackbar.LENGTH_LONG)
+                        .show()
+                    //return@setOnClickListener
+                }
                 buyProductCallback.invoke(product)
                 removeItem(product)
+
             }
         }
     }

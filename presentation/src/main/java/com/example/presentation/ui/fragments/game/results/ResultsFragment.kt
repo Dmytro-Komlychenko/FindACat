@@ -34,12 +34,15 @@ class ResultsFragment : Fragment() {
         gameViewModel =
             ViewModelProvider(this, gameViewModelFactory)[GameViewModel::class.java]
 
-        gameViewModel.results.observe(viewLifecycleOwner) {
-            adapter = ResultItemAdapter(it)
+
+        gameViewModel.userProfile.inventory.observe(viewLifecycleOwner) {
+            val results = gameViewModel.userProfile.results.value?: arrayListOf()
+            adapter =
+                ResultItemAdapter(results, it)
             binding.recyclerView.adapter = adapter
 
             if (it.isNotEmpty())
-                binding.tvMaxNumber.text = it.maxOf { res -> res.countFoundCats }.toString()
+                binding.tvMaxNumber.text = results.maxOf { res -> res.countFoundCats }.toString()
         }
 
         return binding.root
