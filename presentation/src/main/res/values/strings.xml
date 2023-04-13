@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Cats in boxes</string>
+    <string name="app_name">Find A Cat</string>
     <string name="exit_app">Exit app</string>
     <string name="play">Play</string>
     <string name="results">Results</string>

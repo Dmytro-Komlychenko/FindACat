@@ -7,9 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import com.example.presentation.app.App
-import com.example.testgame.R
-import com.example.testgame.databinding.FragmentGameMenuBinding
+import com.example.findacat.R
+import com.example.findacat.databinding.FragmentGameMenuBinding
 
 
 class GameMenuFragment : Fragment() {
@@ -25,7 +24,6 @@ class GameMenuFragment : Fragment() {
     ): View {
         _binding = FragmentGameMenuBinding.inflate(inflater, container, false)
 
-        (activity?.applicationContext as App).appComponent.inject(this@GameMenuFragment)
 
         return binding.root
     }

@@ -6,17 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
-import com.example.presentation.app.App
 import com.example.presentation.ui.fragments.game.GameViewModel
-import com.example.presentation.ui.fragments.game.GameViewModelFactory
-import com.example.testgame.R
-import com.example.testgame.databinding.FragmentCatchCatBinding
+import com.example.findacat.R
+import com.example.findacat.databinding.FragmentCatchCatBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 import kotlin.random.Random
 
 class CatchCatFragment : Fragment() {
@@ -24,9 +21,7 @@ class CatchCatFragment : Fragment() {
     private var _binding: FragmentCatchCatBinding? = null
     private val binding: FragmentCatchCatBinding get() = _binding!!
 
-    @Inject
-    lateinit var gameViewModelFactory: GameViewModelFactory
-    private lateinit var gameViewModel: GameViewModel
+    val gameViewModel: GameViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,24 +29,17 @@ class CatchCatFragment : Fragment() {
     ): View {
         _binding = FragmentCatchCatBinding.inflate(inflater, container, false)
 
-        (activity?.applicationContext as App).appComponent.inject(this@CatchCatFragment)
-        gameViewModel =
-            ViewModelProvider(this, gameViewModelFactory)[GameViewModel::class.java]
-
         binding.tvCounterFoundCats.text = gameViewModel.counterCatsFound.toString()
         start()
 
         binding.btnBackToMenu.setOnClickListener {
             finishGame()
         }
-
         binding.btnCloseGame.setOnClickListener {
             activity?.finish()
         }
-
         return binding.root
     }
-
 
     private fun start() {
         Glide.with(this).load(R.drawable.ic_closed_box).into(binding.ivBox)
@@ -78,9 +66,10 @@ class CatchCatFragment : Fragment() {
                     else -> R.drawable.ic_cat_in_super_box
                 }
 
-                gameViewModel.userProfile.inventory.value?.find { prod -> prod.position == gameViewModel.counterCatsFound }?.let {
-                    catInBoxImage = it.imageUrl
-                }
+                gameViewModel.userProfile.inventory.value?.find { prod -> prod.position == gameViewModel.counterCatsFound }
+                    ?.let {
+                        catInBoxImage = it.imageUrl
+                    }
 
                 Glide.with(this).load(catInBoxImage).into(binding.ivBox)
                 binding.btnBackToMenu.visibility = View.GONE
@@ -118,7 +107,6 @@ class CatchCatFragment : Fragment() {
                     start()
                 }
             }
-
 
 
         }

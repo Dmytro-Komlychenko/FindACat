@@ -8,8 +8,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.presentation.ui.activities.main.MainActivity
-import com.example.testgame.R
-import com.example.testgame.databinding.FragmentWebViewBinding
+import com.example.findacat.R
+import com.example.findacat.databinding.FragmentWebViewBinding
 import com.example.presentation.ui.activities.main.database.WebViewViewModel
 import com.google.android.material.snackbar.Snackbar
 

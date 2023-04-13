@@ -11,8 +11,10 @@ import com.example.presentation.ui.activities.main.config.ConfigViewModel
 import com.example.presentation.ui.activities.main.config.ConfigViewModelFactory
 import com.example.presentation.ui.activities.main.database.WebViewViewModel
 import com.example.presentation.ui.activities.main.database.WebViewViewModelFactory
-import com.example.testgame.R
-import com.example.testgame.databinding.ActivityMainBinding
+import com.example.findacat.R
+import com.example.findacat.databinding.ActivityMainBinding
+import com.example.presentation.ui.fragments.game.GameViewModel
+import com.example.presentation.ui.fragments.game.GameViewModelFactory
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -27,6 +29,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var configViewModelFactory: ConfigViewModelFactory
     private lateinit var configViewModel: ConfigViewModel
 
+    @Inject
+    lateinit var gameViewModelFactory: GameViewModelFactory
+    private lateinit var gameViewModel: GameViewModel
 
     private val navController: NavController by lazy {
         val navHostFragment =
@@ -57,6 +62,8 @@ class MainActivity : AppCompatActivity() {
     private fun navigateToGameFragment() {
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             if (destination.id == R.id.splashFragment) {
+                gameViewModel =
+                    ViewModelProvider(this, gameViewModelFactory)[GameViewModel::class.java]
                 navController.navigate(R.id.action_splashFragment_to_gameMenuFragment)
             }
         }

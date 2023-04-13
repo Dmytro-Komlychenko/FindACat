@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.presentation.models.Product
-import com.example.testgame.databinding.ProductItemBinding
+import com.example.findacat.databinding.ProductItemBinding
 import com.google.android.material.snackbar.Snackbar
 
 typealias BuyProductCallback = (Product) -> Unit

@@ -5,13 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
-import com.example.presentation.app.App
-import com.example.testgame.databinding.FragmentResultsBinding
+import androidx.fragment.app.activityViewModels
+import com.example.findacat.databinding.FragmentResultsBinding
 import com.example.presentation.ui.fragments.game.GameViewModel
-import com.example.presentation.ui.fragments.game.GameViewModelFactory
-import javax.inject.Inject
-
 
 class ResultsFragment : Fragment() {
 
@@ -20,9 +16,7 @@ class ResultsFragment : Fragment() {
 
     private var adapter: ResultItemAdapter? = null
 
-    @Inject
-    lateinit var gameViewModelFactory: GameViewModelFactory
-    private lateinit var gameViewModel: GameViewModel
+    private val gameViewModel: GameViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,13 +24,8 @@ class ResultsFragment : Fragment() {
     ): View {
         _binding = FragmentResultsBinding.inflate(inflater, container, false)
 
-        (activity?.applicationContext as App).appComponent.inject(this@ResultsFragment)
-        gameViewModel =
-            ViewModelProvider(this, gameViewModelFactory)[GameViewModel::class.java]
-
-
         gameViewModel.userProfile.inventory.observe(viewLifecycleOwner) {
-            val results = gameViewModel.userProfile.results.value?: arrayListOf()
+            val results = gameViewModel.userProfile.results.value ?: arrayListOf()
             adapter =
                 ResultItemAdapter(results, it)
             binding.recyclerView.adapter = adapter
@@ -44,7 +33,6 @@ class ResultsFragment : Fragment() {
             if (it.isNotEmpty())
                 binding.tvMaxNumber.text = results.maxOf { res -> res.countFoundCats }.toString()
         }
-
         return binding.root
     }
 

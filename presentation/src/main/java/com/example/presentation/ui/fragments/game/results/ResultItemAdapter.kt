@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.presentation.models.Product
 import com.example.presentation.models.Result
-import com.example.testgame.R
-import com.example.testgame.databinding.ResultItemBinding
+import com.example.findacat.R
+import com.example.findacat.databinding.ResultItemBinding
 
 class ResultItemAdapter(
     private val results: ArrayList<Result>,
