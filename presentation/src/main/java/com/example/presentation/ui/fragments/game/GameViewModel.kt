@@ -26,6 +26,9 @@ class GameViewModel(
         getInventory()
     }
 
+    /**
+     * This method is used to save game's result into game history
+     */
     fun saveResult() {
         viewModelScope.launch {
             val tryNumber: Int =
@@ -42,6 +45,9 @@ class GameViewModel(
         }
     }
 
+    /**
+     * This method is used to get game history from storage
+     */
     private fun getResults() {
         viewModelScope.launch {
             getResultsUseCase.execute {
@@ -54,6 +60,9 @@ class GameViewModel(
         }
     }
 
+    /**
+     * This method is used to get bought items
+     */
     private fun getInventory() {
         viewModelScope.launch {
             getInventoryUseCase.execute {
@@ -66,6 +75,9 @@ class GameViewModel(
         }
     }
 
+    /**
+     * This method is used to buy a product
+     */
     fun buyProduct(product: Product) {
         viewModelScope.launch {
             buyProductUseCase.execute(product.mapPresentationToDomain())
@@ -73,6 +85,9 @@ class GameViewModel(
         }
     }
 
+    /**
+     * This method is used to set money count
+     */
     fun updateMoney() {
         viewModelScope.launch {
             updateMoneyUseCase.execute(money)

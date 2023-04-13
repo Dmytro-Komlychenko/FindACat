@@ -21,7 +21,7 @@ class CatchCatFragment : Fragment() {
     private var _binding: FragmentCatchCatBinding? = null
     private val binding: FragmentCatchCatBinding get() = _binding!!
 
-    val gameViewModel: GameViewModel by activityViewModels()
+    private val gameViewModel: GameViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,6 +41,9 @@ class CatchCatFragment : Fragment() {
         return binding.root
     }
 
+    /**
+     * This method is used to play game
+     */
     private fun start() {
         Glide.with(this).load(R.drawable.ic_closed_box).into(binding.ivBox)
 
@@ -107,11 +110,12 @@ class CatchCatFragment : Fragment() {
                     start()
                 }
             }
-
-
         }
     }
 
+    /**
+     * This method is used to return from game into menu
+     */
     private fun finishGame() {
         gameViewModel.counterCatsFound = 0
         activity?.onBackPressedDispatcher?.onBackPressed()

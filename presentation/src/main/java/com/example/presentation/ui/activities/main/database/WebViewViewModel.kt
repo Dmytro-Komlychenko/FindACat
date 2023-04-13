@@ -11,6 +11,9 @@ class WebViewViewModel(
 ) : ViewModel() {
     val onBackPressed: MutableLiveData<Boolean> = MutableLiveData(false)
 
+    /**
+     * This method is used to log a last opened link
+     */
     fun logLink(webLink: String) {
         viewModelScope.launch {
             logLinkUseCase.execute(webLink)

@@ -22,14 +22,14 @@ typealias LogLinkCallback = (String) -> Unit
 
 @SuppressLint("SetJavaScriptEnabled")
 class CustomWebView(
-    private val webView: WebView,
     context: Context,
+    private val webView: WebView,
     private val uploadingImageResult: ActivityResultLauncher<Intent>,
     private val logLinkCallback: LogLinkCallback,
 ) {
 
     private var fString: ValueCallback<Array<Uri>>? = null
-    private  var camPath: String? = null
+    private var camPath: String? = null
     private lateinit var chooserIntent: Intent
 
     init {
@@ -39,59 +39,29 @@ class CustomWebView(
         setDownloadListener(context)
     }
 
+    /**
+     * This method is used to load a web page
+     */
     fun loadUrl(url: String) {
         webView.loadUrl(url)
     }
 
-    fun observeResult(result: ActivityResult) {
-        var results: Array<Uri>? = null
-        if (result.resultCode == Activity.RESULT_CANCELED) {
-            fString?.onReceiveValue(null)
-            return
-        }
-        if (result.resultCode == Activity.RESULT_OK) {
-            if (fString == null) return
-
-            var clipData: ClipData?
-            var stringData: String?
-            try {
-                clipData = result.data?.clipData
-                stringData = result.data?.dataString
-            } catch (ex: java.lang.Exception) {
-                clipData = null
-                stringData = null
-            }
-
-            if (clipData == null && stringData == null && camPath != null) {
-                results = arrayOf(Uri.parse(camPath))
-            } else {
-                if (clipData != null) {
-                    val numSelectedFiles = clipData.itemCount
-                    results = arrayOf()
-                    for (i in 0 until numSelectedFiles) {
-                        results[i] = clipData.getItemAt(i).uri
-                    }
-                }
-                results = arrayOf(Uri.parse(stringData))
-            }
-        }
-        fString?.onReceiveValue(results)
-        fString = null
-    }
-
+    /**
+     * This method is used to set webView settings
+     */
     private fun setSettings() {
         webView.settings.apply {
             javaScriptEnabled = true
             allowFileAccess = true
             allowContentAccess = true
-
-
             useWideViewPort = false
             domStorageEnabled = true
-
         }
     }
 
+    /**
+     * This method is used to observe web page events
+     */
     private fun initWebViewClient() {
         webView.webViewClient = object : WebViewClient() {
             @Deprecated("Deprecated in Java")
@@ -118,12 +88,18 @@ class CustomWebView(
         }
     }
 
+    /**
+     * This method is used to download files from web page into File Manager
+     */
     private fun setDownloadListener(context: Context) {
         webView.setDownloadListener { url, _, _, _, l ->
             context.startActivity(Intent(Intent.ACTION_VIEW).setData(Uri.parse(url)))
         }
     }
 
+    /**
+     * This method is used to upload files from File Manager into web page
+     */
     private fun initWebChromeClient(context: Context) {
         webView.webChromeClient = object : WebChromeClient() {
             override fun onShowFileChooser(
@@ -165,6 +141,48 @@ class CustomWebView(
         }
     }
 
+    /**
+     * This method is used to observe file uploading result
+     */
+    fun observeResult(result: ActivityResult) {
+        var results: Array<Uri>? = null
+        if (result.resultCode == Activity.RESULT_CANCELED) {
+            fString?.onReceiveValue(null)
+            return
+        }
+        if (result.resultCode == Activity.RESULT_OK) {
+            if (fString == null) return
+
+            var clipData: ClipData?
+            var stringData: String?
+            try {
+                clipData = result.data?.clipData
+                stringData = result.data?.dataString
+            } catch (ex: java.lang.Exception) {
+                clipData = null
+                stringData = null
+            }
+
+            if (clipData == null && stringData == null && camPath != null) {
+                results = arrayOf(Uri.parse(camPath))
+            } else {
+                if (clipData != null) {
+                    val numSelectedFiles = clipData.itemCount
+                    results = arrayOf()
+                    for (i in 0 until numSelectedFiles) {
+                        results[i] = clipData.getItemAt(i).uri
+                    }
+                }
+                results = arrayOf(Uri.parse(stringData))
+            }
+        }
+        fString?.onReceiveValue(results)
+        fString = null
+    }
+
+    /**
+     * This method is used to generate image file
+     */
     @Throws(IOException::class)
     private fun createImage(context: Context): File? {
         @SuppressLint("SimpleDateFormat")

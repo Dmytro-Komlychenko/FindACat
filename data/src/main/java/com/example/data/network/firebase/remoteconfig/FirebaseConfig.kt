@@ -11,6 +11,9 @@ class FirebaseConfig {
     private val remoteConfig = FirebaseRemoteConfig.getInstance()
     lateinit var appConfig: AppConfig
 
+    /**
+     * This method is used to set firebase remote configuration
+     */
     init {
         val settings = FirebaseRemoteConfigSettings.Builder()
             .setMinimumFetchIntervalInSeconds(60)
@@ -19,6 +22,9 @@ class FirebaseConfig {
         remoteConfig.setConfigSettingsAsync(settings)
     }
 
+    /**
+     * This method is used to get application configuration
+     */
     fun fetchFirebaseConfig(dataAppConfigCallback: DataAppConfigCallback) {
         remoteConfig.fetchAndActivate()
             .addOnCompleteListener { task ->

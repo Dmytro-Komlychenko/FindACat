@@ -37,10 +37,9 @@ class WebViewFragment : Fragment() {
         setHasOptionsMenu(true)
 
         webView = CustomWebView(
-            binding.webView,
             requireContext(),
+            binding.webView,
             uploadingImageResult,
-
         ) {
             webViewViewModel.logLink(it)
         }

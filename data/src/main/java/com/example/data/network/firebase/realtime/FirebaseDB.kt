@@ -24,15 +24,23 @@ class FirebaseDB {
     private var moneyDB: DatabaseReference =
         FirebaseDatabase.getInstance().getReference(MONEY_KEY)
 
-
+    /**
+     * This method is used to log a last opened link
+     */
     fun logLink(webLink: String) {
         linkDB.push().setValue(webLink)
     }
 
+    /**
+     * This method is used to save game result into a firebase's history
+     */
     fun saveResult(result: Result) {
         recordResultDB.push().setValue(result)
     }
 
+    /**
+     * This method is used to get a game history
+     */
     fun getResults(dataGetResultsCallback: DataGetResultsCallback) {
         recordResultDB.addValueEventListener(object : ValueEventListener {
 
@@ -48,13 +56,16 @@ class FirebaseDB {
 
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.e(
-                    "Firebase",
-                    "-----ValueEventListener.onCancelled----- \n ${databaseError.message}"
+                    TAG,
+                    "-----RecordResultDB.onCancelled----- \n ${databaseError.message}"
                 )
             }
         })
     }
 
+    /**
+     * This method is used to get bought items
+     */
     fun getInventory(getInventoryCallback: DataGetInventoryCallback) {
         inventoryDB.addValueEventListener(object : ValueEventListener {
 
@@ -70,13 +81,16 @@ class FirebaseDB {
 
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.e(
-                    "Firebase",
-                    "-----ValueEventListener.onCancelled----- \n ${databaseError.message}"
+                    TAG,
+                    "-----InventoryDB.onCancelled----- \n ${databaseError.message}"
                 )
             }
         })
     }
 
+    /**
+     * This method is used to save a bought product
+     */
     fun buyProduct(product: Product) {
         shopDB.addValueEventListener(object : ValueEventListener {
 
@@ -91,13 +105,16 @@ class FirebaseDB {
 
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.e(
-                    "Firebase",
+                    TAG,
                     "-----ValueEventListener.onCancelled----- \n ${databaseError.message}"
                 )
             }
         })
     }
 
+    /**
+     * This method is used to save money count
+     */
     fun updateMoney(money: Float) {
         val updates = hashMapOf<String, Any>()
         updates[MONEY_KEY] = money
@@ -105,6 +122,7 @@ class FirebaseDB {
     }
 
     companion object {
+        const val TAG = "FirebaseDB"
         const val WEB_LINK_KEY = "WEB_LINK_KEY"
         const val RECORD_RESULT_KEY = "RECORD_RESULT_KEY"
         const val SHOP_KEY = "SHOP_KEY"

@@ -59,6 +59,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * This method is used to start a game
+     */
     private fun navigateToGameFragment() {
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             if (destination.id == R.id.splashFragment) {
@@ -69,6 +72,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * This method is used to start a WebView
+     */
     private fun navigateToWebViewFragment() {
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             if (destination.id == R.id.splashFragment) {
@@ -80,6 +86,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * This method doesn't allow to return if the WebViewFragment is open
+     */
     override fun onBackPressed() {
         if (navController.currentDestination?.id == R.id.webViewFragment) {
             webViewViewModel.onBackPressed.value = true
