@@ -2,13 +2,17 @@ package com.example.presentation.ui.fragments.game.shop
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.presentation.models.Product
 import com.example.testgame.databinding.ProductItemBinding
 
+typealias BuyProductCallback = (Product) -> Unit
+
 class ProductItemAdapter(
-    private val products: ArrayList<Product>
+    private val products: ArrayList<Product>,
+    private val buyProductCallback: BuyProductCallback,
 ) : RecyclerView.Adapter<ProductItemAdapter.ViewHolder>() {
 
     private lateinit var holder: ViewHolder
@@ -29,14 +33,41 @@ class ProductItemAdapter(
 
     override fun getItemCount(): Int = products.size
 
+    private fun removeItem(product: Product) {
+        val diffUtil = MyDiffUtil(products, products - product)
+        val diffResult = DiffUtil.calculateDiff(diffUtil)
+        products.remove(products.find { prod -> prod.name == product.name })
+        diffResult.dispatchUpdatesTo(this)
+    }
 
     inner class ViewHolder(private val binding: ProductItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(product: Product) = with(binding) {
             tvProductName.text = product.name
-            tvCost.text = product.cost.toString()
-            Glide.with(binding.root).load(product.imageResource).into(binding.ivProductImage)
+            tvCost.text = product.price.toString()
+            Glide.with(binding.root).load(product.imageUrl).into(binding.ivProductImage)
+
+            binding.btnBuy.setOnClickListener {
+                buyProductCallback.invoke(product)
+                removeItem(product)
+            }
         }
+    }
+}
+
+class MyDiffUtil(
+    private val oldList: List<Product>, private val newList: List<Product>
+) : DiffUtil.Callback() {
+
+    override fun getOldListSize(): Int = oldList.size
+    override fun getNewListSize(): Int = newList.size
+
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition].name == newList[newItemPosition].name
+    }
+
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList == newList
     }
 }

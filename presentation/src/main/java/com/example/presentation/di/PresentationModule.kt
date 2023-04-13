@@ -31,11 +31,15 @@ class PresentationModule {
     @Provides
     fun provideGameViewModelFactory(
         saveResultUseCase: SaveResultUseCase,
-        getResultsUseCase: GetResultsUseCase
+        getResultsUseCase: GetResultsUseCase,
+        buyProductUseCase: BuyProductUseCase,
+       getInventoryUseCase: GetInventoryUseCase
     ): GameViewModelFactory {
         return GameViewModelFactory(
             saveResultUseCase = saveResultUseCase,
-            getResultsUseCase = getResultsUseCase
+            getResultsUseCase = getResultsUseCase,
+            buyProductUseCase = buyProductUseCase,
+            getInventoryUseCase = getInventoryUseCase,
         )
     }
 }

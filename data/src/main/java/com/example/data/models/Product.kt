@@ -1,15 +1,15 @@
-package com.example.presentation.models
+package com.example.data.models
 
 import com.example.domain.models.ProductType
 
 data class Product(
-    val name: String,
-    val price: Float,
-    val imageUrl: Int,
-    val type: ProductType,
+    val name: String = "",
+    val price: Float = 0F,
+    val imageUrl: Int = 0,
+    val type: ProductType = ProductType.Cat,
     val position: Int,
 ) {
-    fun mapPresentationToDomain(): com.example.domain.models.Product {
+    fun mapDataToDomain(): com.example.domain.models.Product {
         return com.example.domain.models.Product(
             name = name,
             price = price,
@@ -20,7 +20,7 @@ data class Product(
     }
 
     companion object {
-        fun mapDomainToPresentation(domainProduct: com.example.domain.models.Product): Product {
+        fun mapDomainToData(domainProduct: com.example.domain.models.Product): Product {
             return Product(
                 name = domainProduct.name,
                 price = domainProduct.price,

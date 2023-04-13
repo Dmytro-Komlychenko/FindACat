@@ -4,12 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.presentation.models.Product
 import com.example.presentation.models.Result
 import com.example.testgame.R
 import com.example.testgame.databinding.ResultItemBinding
 
 class ResultItemAdapter(
-    private val results: ArrayList<Result>
+    private val results: ArrayList<Result>,
+    private val products: ArrayList<Product>
 ) : RecyclerView.Adapter<ResultItemAdapter.ViewHolder>() {
 
     private lateinit var holder: ViewHolder
@@ -38,7 +40,7 @@ class ResultItemAdapter(
             tvTryNuber.text = result.tryNumber.toString()
             tvCounterFoundCats.text = result.countFoundCats.toString()
 
-            val catInBoxImage = when (result.countFoundCats) {
+            var catInBoxImage = when (result.countFoundCats) {
                 0 -> R.drawable.ic_empty_box
                 1 -> R.drawable.ic_cat_in_box_1
                 2 -> R.drawable.ic_cat_in_box_2
@@ -51,6 +53,10 @@ class ResultItemAdapter(
                 9 -> R.drawable.ic_cat_in_box_9
                 10 -> R.drawable.ic_cat_in_box_10
                 else -> R.drawable.ic_cat_in_super_box
+            }
+
+            products.find { prod -> prod.position == result.countFoundCats }?.let {
+                catInBoxImage = it.imageUrl
             }
 
             Glide.with(binding.root).load(catInBoxImage).into(binding.ivLastFoundedCat)

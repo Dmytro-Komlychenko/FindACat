@@ -5,9 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import com.example.domain.models.ProductType
+import com.example.presentation.app.App
 import com.example.presentation.models.Product
+import com.example.presentation.ui.fragments.game.GameViewModel
+import com.example.presentation.ui.fragments.game.GameViewModelFactory
 import com.example.testgame.R
 import com.example.testgame.databinding.FragmentShopBinding
+import javax.inject.Inject
 
 class ShopFragment : Fragment() {
 
@@ -16,17 +22,39 @@ class ShopFragment : Fragment() {
 
     private var adapter: ProductItemAdapter? = null
 
+    @Inject
+    lateinit var gameViewModelFactory: GameViewModelFactory
+    private lateinit var gameViewModel: GameViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentShopBinding.inflate(inflater, container, false)
 
+        (activity?.applicationContext as App).appComponent.inject(this@ShopFragment)
+        gameViewModel =
+            ViewModelProvider(this, gameViewModelFactory)[GameViewModel::class.java]
+
         val products = arrayListOf(
-            Product("Cat in jar", 20F, R.drawable.ic_cat_in_jar_shop_1)
+            Product("Cat in jar", 20F, R.drawable.ic_cat_in_jar_shop_1, ProductType.Cat, 1)
         )
-        adapter = ProductItemAdapter(products)
-        binding.recyclerView.adapter = adapter
+
+
+        gameViewModel.inventory.observe(viewLifecycleOwner) {
+            it.forEach {product ->
+                if (products.contains(product))
+                    products.remove(product)
+            }
+
+            adapter = ProductItemAdapter(products) {
+                gameViewModel.buyProduct(it)
+            }
+            binding.recyclerView.adapter = adapter
+        }
+
+
+
 
         return binding.root
     }

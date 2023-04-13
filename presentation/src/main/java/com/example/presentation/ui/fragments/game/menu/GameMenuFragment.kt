@@ -5,15 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.presentation.app.App
-import com.example.presentation.ui.fragments.game.GameViewModel
-import com.example.presentation.ui.fragments.game.GameViewModelFactory
 import com.example.testgame.R
 import com.example.testgame.databinding.FragmentGameMenuBinding
-import javax.inject.Inject
 
 
 class GameMenuFragment : Fragment() {
@@ -23,9 +19,9 @@ class GameMenuFragment : Fragment() {
 
     private lateinit var navController: NavController
 
-    @Inject
-    lateinit var gameViewModelFactory: GameViewModelFactory
-    private lateinit var gameViewModel: GameViewModel
+    //@Inject
+    //lateinit var gameViewModelFactory: GameViewModelFactory
+    //private lateinit var gameViewModel: GameViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,8 +30,8 @@ class GameMenuFragment : Fragment() {
         _binding = FragmentGameMenuBinding.inflate(inflater, container, false)
 
         (activity?.applicationContext as App).appComponent.inject(this@GameMenuFragment)
-        gameViewModel =
-            ViewModelProvider(this, gameViewModelFactory)[GameViewModel::class.java]
+        //gameViewModel =
+        //    ViewModelProvider(this, gameViewModelFactory)[GameViewModel::class.java]
 
         return binding.root
     }

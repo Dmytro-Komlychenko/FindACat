@@ -28,4 +28,14 @@ class DomainModule {
     fun provideGetResultsUseCase(databaseRepositoryI: DatabaseRepositoryI): GetResultsUseCase {
         return GetResultsUseCase(databaseRepository = databaseRepositoryI)
     }
+
+    @Provides
+    fun provideBuyProductUseCase(databaseRepositoryI: DatabaseRepositoryI): BuyProductUseCase {
+        return BuyProductUseCase(databaseRepository = databaseRepositoryI)
+    }
+
+    @Provides
+    fun provideGetInventoryUseCase(databaseRepositoryI: DatabaseRepositoryI): GetInventoryUseCase {
+        return GetInventoryUseCase(databaseRepository = databaseRepositoryI)
+    }
 }

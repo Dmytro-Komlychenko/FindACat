@@ -10,5 +10,6 @@
     <string name="count_of_catched_cats">Count of catched cats:</string>
     <string name="try_number">Try number:</string>
     <string name="no_data">-</string>
-    <string name="cost">Cost:</string>
+    <string name="price">Price:</string>
+    <string name="buy">Buy</string>
 </resources>

@@ -63,7 +63,7 @@ class CatchCatFragment : Fragment() {
             if (result) {
                 ++gameViewModel.counterCatsFound
 
-                val catInBoxImage = when (gameViewModel.counterCatsFound) {
+                var catInBoxImage = when (gameViewModel.counterCatsFound) {
                     0 -> R.drawable.ic_empty_box
                     1 -> R.drawable.ic_cat_in_box_1
                     2 -> R.drawable.ic_cat_in_box_2
@@ -76,6 +76,10 @@ class CatchCatFragment : Fragment() {
                     9 -> R.drawable.ic_cat_in_box_9
                     10 -> R.drawable.ic_cat_in_box_10
                     else -> R.drawable.ic_cat_in_super_box
+                }
+
+                gameViewModel.inventory.value?.find { prod -> prod.position == gameViewModel.counterCatsFound }?.let {
+                    catInBoxImage = it.imageUrl
                 }
 
                 Glide.with(this).load(catInBoxImage).into(binding.ivBox)
