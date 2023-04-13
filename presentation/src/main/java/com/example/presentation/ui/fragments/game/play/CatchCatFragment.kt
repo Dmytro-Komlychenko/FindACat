@@ -56,26 +56,30 @@ class CatchCatFragment : Fragment() {
                 gameViewModel.money += 0.1F
                 gameViewModel.updateMoney()
 
-                var catInBoxImage = when (gameViewModel.counterCatsFound) {
-                    0 -> R.drawable.ic_empty_box
-                    1 -> R.drawable.ic_cat_in_box_1
-                    2 -> R.drawable.ic_cat_in_box_2
-                    3 -> R.drawable.ic_cat_in_box_3
-                    4 -> R.drawable.ic_cat_in_box_4
-                    5 -> R.drawable.ic_cat_in_box_5
-                    6 -> R.drawable.ic_cat_in_box_6
-                    7 -> R.drawable.ic_cat_in_box_7
-                    8 -> R.drawable.ic_cat_in_box_8
-                    9 -> R.drawable.ic_cat_in_box_9
-                    10 -> R.drawable.ic_cat_in_box_10
-                    else -> R.drawable.ic_cat_in_super_box
-                }
+                var catInBoxImage: Int? = null
 
                 gameViewModel.inventory.value?.find { prod -> prod.position == gameViewModel.counterCatsFound }
                     ?.let {
                         catInBoxImage = it.imageUrl
                     }
 
+                if (catInBoxImage == null) {
+                    catInBoxImage =
+                        when (gameViewModel.counterCatsFound) {
+                            0 -> R.drawable.ic_empty_box
+                            1 -> R.drawable.ic_cat_in_box_1
+                            2 -> R.drawable.ic_cat_in_box_2
+                            3 -> R.drawable.ic_cat_in_box_3
+                            4 -> R.drawable.ic_cat_in_box_4
+                            5 -> R.drawable.ic_cat_in_box_5
+                            6 -> R.drawable.ic_cat_in_box_6
+                            7 -> R.drawable.ic_cat_in_box_7
+                            8 -> R.drawable.ic_cat_in_box_8
+                            9 -> R.drawable.ic_cat_in_box_9
+                            10 -> R.drawable.ic_cat_in_box_10
+                            else -> R.drawable.ic_cat_in_super_box
+                        }
+                }
                 Glide.with(this).load(catInBoxImage).into(binding.ivBox)
                 binding.btnBackToMenu.visibility = View.GONE
                 binding.btnCloseGame.visibility = View.GONE
