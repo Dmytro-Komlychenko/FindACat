@@ -24,8 +24,8 @@ class ResultsFragment : Fragment() {
     ): View {
         _binding = FragmentResultsBinding.inflate(inflater, container, false)
 
-        gameViewModel.userProfile.inventory.observe(viewLifecycleOwner) {
-            val results = gameViewModel.userProfile.results.value ?: arrayListOf()
+        gameViewModel.inventory.observe(viewLifecycleOwner) {
+            val results = gameViewModel.results.value ?: arrayListOf()
             adapter =
                 ResultItemAdapter(results, it)
             binding.recyclerView.adapter = adapter

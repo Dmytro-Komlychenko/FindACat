@@ -66,7 +66,7 @@ class CatchCatFragment : Fragment() {
                     else -> R.drawable.ic_cat_in_super_box
                 }
 
-                gameViewModel.userProfile.inventory.value?.find { prod -> prod.position == gameViewModel.counterCatsFound }
+                gameViewModel.inventory.value?.find { prod -> prod.position == gameViewModel.counterCatsFound }
                     ?.let {
                         catInBoxImage = it.imageUrl
                     }
@@ -91,7 +91,7 @@ class CatchCatFragment : Fragment() {
                     delay(2000)
                     start()
                 }
-                gameViewModel.userProfile.money++
+                gameViewModel.money++
                 gameViewModel.updateMoney()
             } else {
                 Glide.with(this).load(R.drawable.ic_empty_box).into(binding.ivBox)
@@ -101,7 +101,7 @@ class CatchCatFragment : Fragment() {
                 gameViewModel.counterCatsFound = 0
 
                 lifecycleScope.launch {
-                    binding.tvCounterFoundCats.text = "You lost."
+                    binding.tvCounterFoundCats.text = getString(R.string.you_lost)
                     delay(2000)
                     binding.tvCounterFoundCats.text = gameViewModel.counterCatsFound.toString()
                     start()

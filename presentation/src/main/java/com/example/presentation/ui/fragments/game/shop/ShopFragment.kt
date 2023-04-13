@@ -31,19 +31,19 @@ class ShopFragment : Fragment() {
             Product("Cat in jar", 20F, R.drawable.ic_cat_in_jar_shop_1, ProductType.Cat, 1)
         )
 
-        gameViewModel.userProfile.inventory.observe(viewLifecycleOwner) {
+        gameViewModel.inventory.observe(viewLifecycleOwner) {
             it.forEach {product ->
                 if (products.contains(product))
                     products.remove(product)
             }
 
-            adapter = ProductItemAdapter(products, gameViewModel.userProfile.money) {
+            adapter = ProductItemAdapter(products, gameViewModel.money) {
                 gameViewModel.buyProduct(it)
-                gameViewModel.userProfile.money -= it.price
+                gameViewModel.money -= it.price
                 gameViewModel.updateMoney()
             }
             binding.recyclerView.adapter = adapter
-            binding.tvMoney.text = gameViewModel.userProfile.money.toString()
+            binding.tvMoney.text = gameViewModel.money.toString()
         }
 
         return binding.root
