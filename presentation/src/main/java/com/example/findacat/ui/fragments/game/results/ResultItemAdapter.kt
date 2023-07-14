@@ -11,7 +11,7 @@ import com.example.findacat.databinding.ResultItemBinding
 
 class ResultItemAdapter(
     private val results: ArrayList<Result>,
-    private val products: ArrayList<Product>
+    private val products: ArrayList<Product>?
 ) : RecyclerView.Adapter<ResultItemAdapter.ViewHolder>() {
 
     private lateinit var holder: ViewHolder
@@ -54,7 +54,7 @@ class ResultItemAdapter(
                 10 -> R.drawable.ic_cat_in_box_10
                 else -> R.drawable.ic_cat_in_super_box
             }
-            products.find { prod -> prod.position == result.countFoundCats }?.let {
+            products?.find { prod -> prod.position == result.countFoundCats }?.let {
                 catInBoxImage = it.imageUrl
             }
             Glide.with(binding.root).load(catInBoxImage).into(binding.ivLastFoundedCat)

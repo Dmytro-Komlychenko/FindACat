@@ -59,8 +59,6 @@ class CatchCatFragment : Fragment() {
             val result = Random.nextBoolean()
             if (result) {
                 ++gameViewModel.counterCatsFound
-                gameViewModel.money += 0.1F
-                gameViewModel.updateMoney()
 
                 var catInBoxImage: Int? = null
 
@@ -106,14 +104,13 @@ class CatchCatFragment : Fragment() {
                     delay(2000)
                     start()
                 }
-                gameViewModel.money++
+                gameViewModel.money += 0.1F
                 gameViewModel.updateMoney()
             } else {
                 Glide.with(this).load(R.drawable.ic_empty_box).into(binding.ivBox)
                 binding.btnBackToMenu.visibility = View.VISIBLE
                 binding.btnCloseGame.visibility = View.VISIBLE
                 gameViewModel.saveResult()
-                gameViewModel.counterCatsFound = 0
 
                 lifecycleScope.launch {
                     binding.tvCounterFoundCats.text = getString(R.string.you_lost)

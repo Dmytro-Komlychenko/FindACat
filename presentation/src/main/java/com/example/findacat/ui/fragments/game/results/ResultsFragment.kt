@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.example.findacat.app.App
 import com.example.findacat.databinding.FragmentResultsBinding
-import com.example.findacat.models.Result
 import com.example.findacat.ui.fragments.game.GameViewModel
 import com.example.findacat.ui.fragments.game.GameViewModelFactory
 import javax.inject.Inject
@@ -34,13 +33,13 @@ class ResultsFragment : Fragment() {
         gameViewModel =
             ViewModelProvider(this, gameViewModelFactory)[GameViewModel::class.java]
 
-        gameViewModel.inventory.observe(viewLifecycleOwner) {
+        gameViewModel.results.observe(viewLifecycleOwner) {
             val results = gameViewModel.results.value ?: arrayListOf()
             adapter =
-                ResultItemAdapter(results as ArrayList<Result>, it)
+                ResultItemAdapter(results, gameViewModel.inventory.value)
             binding.recyclerView.adapter = adapter
 
-            if (it.isNotEmpty())
+            if (results.isNotEmpty())
                 binding.tvMaxNumber.text = results.maxOf { res -> res.countFoundCats }.toString()
         }
         return binding.root

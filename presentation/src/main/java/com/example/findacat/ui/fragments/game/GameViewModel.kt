@@ -19,7 +19,7 @@ class GameViewModel(
 
     var counterCatsFound = 0
     val inventory: MutableLiveData<ArrayList<Product>> = MutableLiveData()
-    val results: MutableLiveData<List<Result>> = MutableLiveData()
+    val results: MutableLiveData<ArrayList<Result>> = MutableLiveData()
     var money: Float = 0F
 
     init {
@@ -35,18 +35,19 @@ class GameViewModel(
                     results.value?.maxOf { res -> res.tryNumber }!!.plus(1)
                 } else 1
 
-            saveResultUseCase.execute(
-                com.example.domain.models.Result(
-                    tryNumber,
-                    counterCatsFound
-                )
+            val res = com.example.domain.models.Result(
+                tryNumber,
+                counterCatsFound
             )
+            counterCatsFound = 0
+            saveResultUseCase.execute(res)
+            results.value?.add(Result.mapDomainToPresentation(res))
         }
     }
 
     private fun getResults() {
         viewModelScope.launch {
-            var tempResults = arrayListOf<Result>()
+            val tempResults = arrayListOf<Result>()
             getResultsUseCase.execute()
                 .forEach { tempResults.add(Result.mapDomainToPresentation(it)) }
             results.value = tempResults
@@ -55,7 +56,7 @@ class GameViewModel(
 
     private fun getInventory() {
         viewModelScope.launch {
-            var tempInventory = arrayListOf<Product>()
+            val tempInventory = arrayListOf<Product>()
             getInventoryUseCase.execute()
                 .forEach { tempInventory.add(Product.mapDomainToPresentation(it)) }
             inventory.value = tempInventory
@@ -64,7 +65,7 @@ class GameViewModel(
 
     private fun initMoney() {
         viewModelScope.launch {
-            getMoneyUseCase.execute()
+            money = getMoneyUseCase.execute()
         }
     }
 
