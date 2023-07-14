@@ -2,10 +2,8 @@ package com.example.data.repositories
 
 import com.example.data.network.RetrofitInstance
 import com.example.data.storage.sharedprefs.AppActionSharedPrefs
-import com.example.data.storage.sharedprefs.IsFirstLaunchSharedPrefs
 import com.example.domain.models.AppAction
 import com.example.domain.models.AppActionE
-import com.example.domain.models.IsFirstLaunch
 import com.example.domain.repositoriesi.AppActionRepositoryI
 import com.example.domain.repositoriesi.DomainAppActionCallback
 
@@ -48,5 +46,4 @@ class AppActionRepository(
         }
         appActionSharedPrefs.save(appAction)
     }
-
 }

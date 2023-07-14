@@ -15,7 +15,6 @@ import com.example.findacat.ui.fragments.game.GameViewModel
 import com.example.findacat.ui.fragments.game.GameViewModelFactory
 import javax.inject.Inject
 
-
 class GameMenuFragment : Fragment() {
 
     private var _binding: FragmentGameMenuBinding? = null

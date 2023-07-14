@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.domain.usecases.*
 import com.example.findacat.ui.fragments.game.GameViewModelFactory
 import com.example.findacat.ui.fragments.splash.SplashViewModelFactory
+import com.example.findacat.ui.fragments.web.WebViewModelFactory
 import dagger.Module
 import dagger.Provides
 
@@ -49,5 +50,11 @@ class PresentationModule(val context: Context) {
             updateMoneyUseCase = updateMoneyUseCase,
             getMoneyUseCase = getMoneyUseCase,
         )
+    }
+
+    @Provides
+    fun provideWebViewModelFactory(
+    ): WebViewModelFactory {
+        return WebViewModelFactory()
     }
 }

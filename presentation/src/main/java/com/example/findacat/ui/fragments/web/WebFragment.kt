@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.activityViewModels
 import com.example.findacat.databinding.FragmentWebBinding
 
 class WebFragment : Fragment() {
@@ -16,6 +17,8 @@ class WebFragment : Fragment() {
     private val binding: FragmentWebBinding get() = _binding!!
 
     private lateinit var webView: CustomWebView
+
+    private val webViewModel: WebViewModel by activityViewModels()
 
     private val uploadingImageResult: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -35,10 +38,25 @@ class WebFragment : Fragment() {
         )
         webView.loadUrl(WEB_LINK_KEY)
 
+        webViewModel.onBackPressed.observe(viewLifecycleOwner) {
+            if (webViewModel.onBackPressed.value == false) return@observe
+
+            if (binding.webView.canGoBack()) {
+                binding.webView.goBack()
+            } else {
+                exit()
+            }
+            webViewModel.onBackPressed.value = false
+        }
 
         return binding.root
     }
 
+    private fun exit() {
+        val pid = android.os.Process.myPid()
+        activity?.finishAffinity()
+        android.os.Process.killProcess(pid)
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

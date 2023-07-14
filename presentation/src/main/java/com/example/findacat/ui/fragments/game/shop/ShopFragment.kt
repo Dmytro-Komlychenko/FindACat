@@ -46,12 +46,12 @@ class ShopFragment : Fragment() {
                 Product("Cat in jar", 20F, R.drawable.ic_cat_in_jar_shop_1, ProductType.Cat, 1)
             )
 
-            it.forEach {product ->
+            it.forEach { product ->
                 if (products.contains(product))
                     products.remove(product)
             }
 
-            adapter = ProductItemAdapter(products, gameViewModel.money) {product ->
+            adapter = ProductItemAdapter(products, gameViewModel.money) { product ->
                 gameViewModel.buyProduct(product)
                 gameViewModel.money -= product.price
                 gameViewModel.updateMoney()

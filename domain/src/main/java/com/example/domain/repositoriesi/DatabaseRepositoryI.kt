@@ -10,5 +10,4 @@ interface DatabaseRepositoryI {
     suspend fun buyProduct(product: Product)
     suspend fun getResults() : List<Result>
     suspend fun getInventory(): List<Product>
-
 }

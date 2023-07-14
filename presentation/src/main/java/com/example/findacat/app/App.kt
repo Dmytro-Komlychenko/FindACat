@@ -5,12 +5,14 @@ import com.example.findacat.di.AppComponent
 import com.example.findacat.di.DaggerAppComponent
 import com.example.findacat.di.PresentationModule
 
-class App: Application() {
+class App : Application() {
 
-     lateinit var appComponent: AppComponent
+    lateinit var appComponent: AppComponent
 
-     override fun onCreate() {
-         super.onCreate()
-         appComponent = DaggerAppComponent.builder().presentationModule(PresentationModule(context = this)).build()
-     }
+    override fun onCreate() {
+        super.onCreate()
+        appComponent =
+            DaggerAppComponent.builder().presentationModule(PresentationModule(context = this))
+                .build()
+    }
 }

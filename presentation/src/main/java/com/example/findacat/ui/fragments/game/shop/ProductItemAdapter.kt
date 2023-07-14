@@ -58,7 +58,6 @@ class ProductItemAdapter(
                 }
                 buyProductCallback.invoke(product)
                 removeItem(product)
-
             }
         }
     }

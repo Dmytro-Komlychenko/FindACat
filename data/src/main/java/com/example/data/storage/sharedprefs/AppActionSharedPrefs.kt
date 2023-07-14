@@ -12,7 +12,6 @@ class AppActionSharedPrefs(context: Context) {
             Context.MODE_PRIVATE
         )
 
-
     fun save(value: Boolean) {
         sharedPreferences.edit().putBoolean(Constants.APP_ACTION, value).apply()
     }

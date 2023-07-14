@@ -10,7 +10,7 @@ class SplashViewModelFactory(
     private val getAppActionFromDBUseCase: GetAppActionFromDBUseCase,
     private val setIsFirstLaunchUseCase: SetIsFirstLaunchUseCase,
     private val saveAppActionToDBUseCase: SaveAppActionToDBUseCase,
-    ) : ViewModelProvider.Factory {
+) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return SplashViewModel(
             getIsFirstLaunchUseCase = getIsFirstLaunchUseCase,

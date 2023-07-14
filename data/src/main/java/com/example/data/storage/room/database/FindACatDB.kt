@@ -8,8 +8,6 @@ import com.example.data.storage.room.dao.ProductDao
 import com.example.data.storage.room.dao.ResultDao
 import com.example.data.storage.room.entities.Result
 import com.example.data.storage.room.entities.Product
-
-
 @Database(entities = [Result::class, Product::class], version = 1, exportSchema = false)
 abstract class FindACatDB: RoomDatabase() {
 

@@ -12,7 +12,6 @@ class GameMoneySharedPrefs(context: Context) {
             Context.MODE_PRIVATE
         )
 
-
     fun update(value: Float) {
         sharedPreferences.edit().putFloat(Constants.GAME_MONEY, value).apply()
     }
