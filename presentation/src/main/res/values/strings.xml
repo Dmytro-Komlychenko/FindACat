@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">FindACat</string>
+    <string name="price">Price:</string>
+    <string name="buy">Buy</string>
+    <string name="money">Money:</string>
+    <string name="you_lost">You lost</string>
+    <string name="back_to_menu">Back to menu</string>
+    <string name="close_the_game">Close the game</string>
+    <string name="play">Play</string>
+    <string name="results">Results</string>
+    <string name="shop">Shop</string>
+    <string name="the_maximum_number_of_cats_caught_in_a_row">The maximum number of cats caught in a row</string>
+    <string name="no_data">-</string>
+    <string name="try_number">Try number:</string>
+    <string name="count_of_catched_cats">Count of catched cats:</string>
+</resources>
